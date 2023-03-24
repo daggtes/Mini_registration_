@@ -83,6 +83,8 @@ class HouseHold (models.Model):
     NumberOfFemaleAbleBody = models.IntegerField(null=True, blank=True)
     RegistrationDate = models.DateField(null=True, blank=True)
     HouseholdProgram = models.ForeignKey(HouseHoldProgram, on_delete=models.CASCADE, null=True, blank=True)
+    
+    
     @property
     def CreatedBy(self):
         CreatedBy= self.pk
@@ -134,9 +136,6 @@ class Member (models.Model):
     Educationlevel = models.ForeignKey(EducationLevel, on_delete=models.CASCADE, null=True, blank=True)
     Healthstatus = models.ForeignKey(HealthStatus, on_delete=models.PROTECT, null=True, blank=True)
     Martialstatus = models.ForeignKey(MartialStatus, on_delete=models.CASCADE, null=True, blank=True)
-    CreatedBy = models.CharField(null=True,max_length=64, blank=True)
-    UpdatedBy = models.CharField(null=True, max_length=64, blank=True)
-
 
     @property
     def CreatedBy(self):
