@@ -1,5 +1,5 @@
 from django.db import models
-from datetime import date, timedelta
+from datetime import date
 
 # Create your models here.
 
@@ -83,16 +83,16 @@ class HouseHold (models.Model):
     NumberOfFemaleAbleBody = models.IntegerField(null=True, blank=True)
     RegistrationDate = models.DateField(null=True, blank=True)
     HouseholdProgram = models.ForeignKey(HouseHoldProgram, on_delete=models.CASCADE, null=True, blank=True)
-    
-    
     @property
-    def CreatedBy(self):
-        CreatedBy= self.pk
+    def CreateBy(self):
+        CreatedBy = self.pk
         return CreatedBy
+    
     @property
     def UpdatedBy(self):
-        UpdatedBy= self.pk
+        UpdatedBy = self.pk
         return UpdatedBy
+    
     
 
 class Member (models.Model):
@@ -122,11 +122,13 @@ class Member (models.Model):
     
 
     """Calculating the Age automatically"""
-    
     @property
     def Age(self):
         Age = date.today().year - self.DateOfBirth.year
         return Age
+    
+    
+    
     
     
 
@@ -136,9 +138,9 @@ class Member (models.Model):
     Educationlevel = models.ForeignKey(EducationLevel, on_delete=models.CASCADE, null=True, blank=True)
     Healthstatus = models.ForeignKey(HealthStatus, on_delete=models.PROTECT, null=True, blank=True)
     Martialstatus = models.ForeignKey(MartialStatus, on_delete=models.CASCADE, null=True, blank=True)
-
+    
     @property
-    def CreatedBy(self):
+    def CreateBy(self):
         CreatedBy = self.FirstName
         return CreatedBy
     
@@ -146,6 +148,8 @@ class Member (models.Model):
     def UpdatedBy(self):
         UpdatedBy = self.FirstName
         return UpdatedBy
-
+    
+    
+    
 
 

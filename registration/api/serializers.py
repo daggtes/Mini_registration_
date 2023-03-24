@@ -5,7 +5,10 @@ class MemberSerializers(serializers.ModelSerializer):
     class Meta:
         model = Member
         fields = (
-            '__all__'
+            'id','CreatedDate','UpdatedDate','Status',
+            'HouseholdMemberIdNumber','NationalMemberIdNumber','FirstName','FatherName',
+            'GrandFatherName','MotherFullName','Gender','DateOfBirth','Age','Beneficiarytype',
+            'RelationToHousehold','RegistrationDate','Educationlevel','Healthstatus','Martialstatus','CreateBy' ,'UpdatedBy',
         )
 
         
@@ -43,4 +46,7 @@ class HouseHoldProgramSerializers(serializers.ModelSerializer):
 class HouseHoldSerializers(serializers.ModelSerializer):
     class Meta:
         model = HouseHold
-        fields = ( '__all__')
+        fields = (  'id','CreatedDate','UpdatedDate','Status',
+                'HouseHoldIdNumber','MaleMemberSize','FemaleMemberSize',
+                'NumberOfParticipatingMale','NumberOfParticipatingFemale','NumberOfMaleAbleBody',
+                'NumberOfFemaleAbleBody','RegistrationDate','HouseholdProgram','CreateBy', 'UpdatedBy',)

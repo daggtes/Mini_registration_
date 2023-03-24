@@ -1,8 +1,6 @@
 from registration.models import Member, EducationLevel, MartialStatus, HealthStatus, HouseHold, HouseHoldProgram
 from .serializers import MemberSerializers, EducationLevelSerializers, HealthStatusSerializers, HouseHoldProgramSerializers, HouseHoldSerializers, MartialStatusSerializers
-from rest_framework import viewsets, generics
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
+from rest_framework import viewsets
 
 
 class MemberViewSet(viewsets.ModelViewSet):
