@@ -1,18 +1,17 @@
 from django.db import models
 from datetime import date
+from django.conf import settings
 
 # Create your models here.
 
-
+#  not Choice description
 class HouseHoldProgram(models.Model):
-    """Choice for household programs"""
 
-    HOUSE_HOLD_PROGRAM_CHOICES = (
-        ('Public Work', 'Public work'),
-        ('Direct Support', 'Direct Support')
-    )
-    HouseHoldProgram = models.CharField(max_length=30, null=True, choices=HOUSE_HOLD_PROGRAM_CHOICES, blank=True)
 
+    HouseHoldProgram = models.CharField(max_length=30, null=True, blank=True)
+
+    def __str__(self):
+        return self.HouseHoldProgram
 
 class EducationLevel (models.Model):
     """Level Choice"""
@@ -26,6 +25,10 @@ class EducationLevel (models.Model):
         ('Doctorate', 'Doctorate')
     )
 
+    def __str__(self):
+        return self.EductionLevel
+    
+
     EductionLevel = models.CharField(max_length=30, blank=True, null=True,choices=EDUCATION_LEVEL_CHOICES)
 
 
@@ -37,7 +40,8 @@ class HealthStatus (models.Model):
         ('Unhealthy', 'Unhealthy')
     ) 
     HealthStatus = models.CharField(max_length=30, blank= True, null=True, choices=HEALTH_STATUS_CHOICES)
-
+    def __str__(self):
+        return self.HealthStatus
 class MartialStatus(models.Model):
     
     """Martial Status choice"""
@@ -51,7 +55,9 @@ class MartialStatus(models.Model):
     )
 
     MartialStatus = models.CharField(max_length=30, blank=True, null=True, choices=MARTIAL_STATUS_CHOICE)
-
+    def __str__(self):
+        return self.MartialStatus
+    
 class BeneficiaryType(models.Model):
     """Choice for Beneficary"""
 
@@ -62,7 +68,9 @@ class BeneficiaryType(models.Model):
     )
 
     BeneficiaryType = models.CharField(max_length=64, blank=True, null=True, choices=BENEFICARY_CHOICES)
-
+    def __str__(self):
+        return self.BeneficiaryType
+    
 class HouseHold (models.Model):
 
     CreatedDate = models.DateTimeField(auto_now_add=True, null=True)
@@ -73,7 +81,7 @@ class HouseHold (models.Model):
     Inactive_Status = 0
     STATUS_CHOICES = ((Active_Status, 'Active'), (Inactive_Status, 'Inactive'),)
     
-    Status = models.IntegerField(choices=STATUS_CHOICES, default= Active_Status, null=True, blank=True)
+    Status = models.IntegerField(choices=STATUS_CHOICES, default= Active_Status, null=True, blank=False)
     HouseHoldIdNumber = models.CharField(max_length=25, null=True, blank=True)
     MaleMemberSize = models.IntegerField(null=True, blank=True)
     FemaleMemberSize = models.IntegerField(null=True, blank=True)
@@ -83,19 +91,16 @@ class HouseHold (models.Model):
     NumberOfFemaleAbleBody = models.IntegerField(null=True, blank=True)
     RegistrationDate = models.DateField(null=True, blank=True)
     HouseholdProgram = models.ForeignKey(HouseHoldProgram, on_delete=models.CASCADE, null=True, blank=True)
-    @property
-    def CreateBy(self):
-        CreatedBy = self.pk
-        return CreatedBy
-    
-    @property
-    def UpdatedBy(self):
-        UpdatedBy = self.pk
-        return UpdatedBy
-    
+    Created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='Crreated_by', blank=True, null=True)
+    Updated_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='Upddated_by', blank=True, null=True)
+    def __str__(self):
+        return self.HouseHoldIdNumber
     
 
 class Member (models.Model):
+
+    
+    
     CreatedDate = models.DateTimeField(auto_now_add=True, null=True)
     UpdatedDate = models.DateTimeField(auto_now=True, null=True)
 
@@ -127,29 +132,19 @@ class Member (models.Model):
         Age = date.today().year - self.DateOfBirth.year
         return Age
     
-    
-    
-    
-    
-
     Beneficiarytype = models.ForeignKey(BeneficiaryType, on_delete=models.CASCADE, null=True, blank=True)
     RelationToHousehold = models.ForeignKey(HouseHold, on_delete= models.CASCADE, null=True, blank=True)
     RegistrationDate = models.DateField(null=True, blank=True)
     Educationlevel = models.ForeignKey(EducationLevel, on_delete=models.CASCADE, null=True, blank=True)
     Healthstatus = models.ForeignKey(HealthStatus, on_delete=models.PROTECT, null=True, blank=True)
     Martialstatus = models.ForeignKey(MartialStatus, on_delete=models.CASCADE, null=True, blank=True)
+    Created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='Created_by', blank=True, null=True)
+    Updated_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='Updated_by', blank=True, null=True)
+
     
-    @property
-    def CreateBy(self):
-        CreatedBy = self.FirstName
-        return CreatedBy
-    
-    @property
-    def UpdatedBy(self):
-        UpdatedBy = self.FirstName
-        return UpdatedBy
-    
-    
-    
+
+    def __str__(self):
+        return self.FirstName
+
 
 

@@ -2,13 +2,15 @@ from rest_framework import serializers
 from registration.models import Member, EducationLevel, HealthStatus, HouseHold, HouseHoldProgram, MartialStatus
 
 class MemberSerializers(serializers.ModelSerializer):
+    Created_by = serializers.StringRelatedField(default=serializers.CurrentUserDefault(), read_only=True)
+    Updated_by = serializers.StringRelatedField(default=serializers.CurrentUserDefault(), read_only=True)
     class Meta:
         model = Member
         fields = (
             'id','CreatedDate','UpdatedDate','Status',
             'HouseholdMemberIdNumber','NationalMemberIdNumber','FirstName','FatherName',
             'GrandFatherName','MotherFullName','Gender','DateOfBirth','Age','Beneficiarytype',
-            'RelationToHousehold','RegistrationDate','Educationlevel','Healthstatus','Martialstatus','CreateBy' ,'UpdatedBy',
+            'RelationToHousehold','RegistrationDate','Educationlevel','Healthstatus','Martialstatus','Created_by' ,'Updated_by',
         )
 
         
@@ -44,9 +46,12 @@ class HouseHoldProgramSerializers(serializers.ModelSerializer):
         )
 
 class HouseHoldSerializers(serializers.ModelSerializer):
+    Created_by = serializers.StringRelatedField(default=serializers.CurrentUserDefault(), read_only=True)
+    Updated_by = serializers.StringRelatedField(default=serializers.CurrentUserDefault(), read_only=True)
     class Meta:
         model = HouseHold
         fields = (  'id','CreatedDate','UpdatedDate','Status',
                 'HouseHoldIdNumber','MaleMemberSize','FemaleMemberSize',
                 'NumberOfParticipatingMale','NumberOfParticipatingFemale','NumberOfMaleAbleBody',
-                'NumberOfFemaleAbleBody','RegistrationDate','HouseholdProgram','CreateBy', 'UpdatedBy',)
+                'NumberOfFemaleAbleBody','RegistrationDate','HouseholdProgram','Created_by', 'Updated_by',)
+
